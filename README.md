@@ -2,4 +2,4 @@ This is Arduino code for a basic panel of buttons and switches designed to outpu
 
 Project Details (here)[https://westonnovelli.github.io/project-actuator/]
 
-![Panel](./images/above-monitor.jpg)
+![Panel](./images/pov.jpg)

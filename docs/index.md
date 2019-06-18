@@ -11,9 +11,9 @@ My plan began to fall into place.
 
 And thus I began. I dug our my old Arduino Uno starter set was gifted a long time ago. Step 1, figure out how to turn this into a keyboard. Step 1A, figure out how to have the Arduino detect the press of a button. Step 1A:Part 1, go through the tutorial booklet from the starter set for the 3 time.
 
-![Cover image of Project Actuator](../images/panel.jpg)
+![Cover image of Project Actuator](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/panel.jpg)
 
-![Player POV](../images/pov.jpg)
+![Player POV](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/pov.jpg)
 
 # Background
 A bit of background on myself. I am a software engineer focusing on the front end of enterprise web applications. I spend most of my time writing [React](https://reactjs.org/) components to make buttons appear on a screens. I studied Computer Science in college during which I took 1 electrical engineering course. I am quite experienced at writing software and I know the **bare** minimum about hardware. 
@@ -117,7 +117,7 @@ Look at all them buttons and switches!
 # Design the board
 Well back to the Arduino project. Now that I had a better understanding of what inputs I was looking build, I drew up a basic diagram for the panel. After some iterations, it looked like this:
 
-![Panel Design](../images/panel-design.png)
+![Panel Design](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/panel-design.png)
 
 I had a rough idea of what each button would be/look like, but no idea of what it would actually be, or where I would find it. 
 
@@ -136,7 +136,7 @@ I found my way to [this](https://github.com/Anarch157a/Elite-Dangerous-Keypad) g
 # Over Complicated Hyperspace Jump Design 
 I wrote up a skeleton and investigated the silly ideas I had about making the jump to light speed system waaay over complicated. 
 
-I devised a [three stage system](../src/motivator.ino) for making a hyperjump. My hyperdrive partially consisted of two field vector motivators that assisted in powering the drive. In order for the motivators to fire, they needed to be primed before every jump. Further, each motivator was configurable to two vectors. These vectors would have to be alternated for each jump. Think of an hourglass, once it's drained to the bottom. You have to flip it to use it again. Using the 2D toggle switches I would prime each motivator into either the positive or negative vector. Only after both motivators were primed in the opposite direction than it was previously primed (and fired) would the jump drive be triggerable. Then I had a mode switch that would allow me to make either a supercruise (intrasystem travel), hyperspace (intrersystem travel), or a drive disengage shift. All of this complexity to make it more fun and exciting when I needed to jump in a hurry. I can pull the whole "watch this" line from Empire Strikes Back. 
+I devised a [three stage system](https://github.com/westonnovelli/project-actuator/blob/master/src/motivator.ino) for making a hyperjump. My hyperdrive partially consisted of two field vector motivators that assisted in powering the drive. In order for the motivators to fire, they needed to be primed before every jump. Further, each motivator was configurable to two vectors. These vectors would have to be alternated for each jump. Think of an hourglass, once it's drained to the bottom. You have to flip it to use it again. Using the 2D toggle switches I would prime each motivator into either the positive or negative vector. Only after both motivators were primed in the opposite direction than it was previously primed (and fired) would the jump drive be triggerable. Then I had a mode switch that would allow me to make either a supercruise (intrasystem travel), hyperspace (intrersystem travel), or a drive disengage shift. All of this complexity to make it more fun and exciting when I needed to jump in a hurry. I can pull the whole "watch this" line from Empire Strikes Back. 
 
 All of this logic would be handled by the Arduino software. The result to the computer would be 1 of 3 different keystrokes depending on the mode switch. The motivator logic and mode detection was taken into consideration when the jump button was pressed. 
 
@@ -153,36 +153,36 @@ I decided (without much research) that the 22mil plain steel sheet would be the 
 
 Using sheet metal snips, I cut off a small test piece to practice with. Using standard drill bits I slowly and carefully drilled holes of varying sizes for the different buttons. The dimensions worked out rather well and matched the drill bits nicely. I found that using smaller bits to start, and gradually increasing the size resulted in the cleanest hole. The next obstacle was the square holes I needed. After some testing with a dremel, I found using a triangle file resulted in the best and tightest corners. Unfortunately, I didn't have a file small enough for the smallest squares and the was rather slow going. So a quick trip to the hardware store, a new small triangle file and a tungsten carbide cutter attachment for the dremel later, I was back in business. I also found a set of countersink bits that allowed for even cleaner, and larger holes to be drilled. The dremel would hog out the most of the corners and the file would square everything up.
 
-![Practicing Cutting the Holes](../images/test-piece-cuts.jpg)
+![Practicing Cutting the Holes](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/test-piece-cuts.jpg)
 
 I fit each button type into its test hole and confirmed everything fit. Next step, cut it all for real!
 
-![Testfitting the buttons in the test piece](../images/test-piece-fitting.jpg)
+![Testfitting the buttons in the test piece](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/test-piece-fitting.jpg)
 
 I cut the panel to size, marked each hole, and drilled initial small holes for each button.
 
-![Pilot holes for Layout](../images/initial-holes.jpg)
+![Pilot holes for Layout](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/initial-holes.jpg)
 
 Slow and careful work expanded each hole to the exact dimensions. One hole needed to be a hexagon, the dremel and file technique worked perfectly.
 
-![Cut holes to Size](../images/shaped-holes.jpg)
+![Cut holes to Size](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/shaped-holes.jpg)
 
 Now I was able to mount each button into the panel, next up: wiring! 
 
-![Test Fit of All Actuators](../images/test-fit.jpg)
+![Test Fit of All Actuators](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/test-fit.jpg)
 
 But before I wired it all together. I decided to engrave some symbols into the panel to spice up the design and perhaps make each button more identifiable. I wanted to be able to use this panel for more that just Elite Dangerous. It was, after all, just emulating a keyboard. So I didn't want to make labels that were space ship/Elite specific. So I decide to put largely random Aurebesh characters on it, because I like Star Wars. I even designed and drew a Star Wars inspired symbol on it (bonus points if you can figure out what SW symbols I worked from).
 
-![Aurebesh Markings](../images/markings.jpg)
+![Aurebesh Markings](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/markings.jpg)
 
 # Wiring
 I headed back to my drawing and virtually wired (and then rewired) my matrix. In the end, I had this:
 
-![wiring-diagram.png](../images/wiring-diagram.png)
+![wiring-diagram.png](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/wiring-diagram.png)
 
 I color coded the columns vs the rows and numbered each one with the pin it would connect to on the Arduino. Then I began wiring. Yikes, this was a bit of a mess. To make a long story short (too late), DON'T USE PLUMBING SOLDER FOR WIRING. Even if it won't corrode the electronics and even if the connections are good enough to conduct, it's not worth the hassle. Once I bought some proper electrical solder and stopped using the old (apparently plumbing) solder I had lying around, it was actually quite clean and nice to work with. A touch of rewiring later, I was all wired up... with the matrix at least.
 
-![Wiring](../images/wiring.jpg)
+![Wiring](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/wiring.jpg)
 
 # Second Circuit
 Most of the buttons on the panel were a part of the matrix. But a few didn't belong. The mode switch for the hyperspace jump mechanic was a rotary switch and thus not a momentary actuator and the full panel ON OFF switch were handled separately. This is where I finally understood what the pull-down resistors are for!
@@ -192,15 +192,15 @@ A small secondary circuit was added. I wanted to be able to disconnect the panel
 # Final Software Touches
 And then all was mechanically complete! I finalized the rest of the software, referenced my key-binding notes to complete the keystroke configuration, and tested that pressing a button made those keystrokes happen! I used one of those presenter assistant programs that displays what keys were just pressed in the corner of the screen. [Carnac](http://code52.org/carnac/) worked just how I needed to see the modifier keys and everything.
 
-![Full Installation](../images/installation.jpg)
+![Full Installation](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/installation.jpg)
 
 # Housing and Mounting
 The final phase was near; build the panel housing and mounting system.
 
 The housing was cut from some scrap quarter inch plywood I had. The backing panel was the leftover sheet metal. Nothing was quite cut square, so it's a bit janky, but it still works.
 
-![Full Setup](../images/full-setup.jpg)
+![Full Setup](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/full-setup.jpg)
 
-![Elite Dangerous Usage](../images/panel-usage.png)
+![Elite Dangerous Usage](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/panel-usage.png)
 
 Thanks for reading!
