@@ -117,6 +117,8 @@ Look at all them buttons and switches!
 # Design the board
 Well back to the Arduino project. Now that I had a better understanding of what inputs I was looking build, I drew up a basic diagram for the panel. After some iterations, it looked like this:
 
+![Panel Design](../images/panel-design.png)
+
 I had a rough idea of what each button would be/look like, but no idea of what it would actually be, or where I would find it. 
 
 # What is a Switch?
@@ -176,6 +178,8 @@ But before I wired it all together. I decided to engrave some symbols into the p
 # Wiring
 I headed back to my drawing and virtually wired (and then rewired) my matrix. In the end, I had this:
 
+![wiring-diagram.png](../images/wiring-diagram.png)
+
 I color coded the columns vs the rows and numbered each one with the pin it would connect to on the Arduino. Then I began wiring. Yikes, this was a bit of a mess. To make a long story short (too late), DON'T USE PLUMBING SOLDER FOR WIRING. Even if it won't corrode the electronics and even if the connections are good enough to conduct, it's not worth the hassle. Once I bought some proper electrical solder and stopped using the old (apparently plumbing) solder I had lying around, it was actually quite clean and nice to work with. A touch of rewiring later, I was all wired up... with the matrix at least.
 
 ![Wiring](../images/wiring.jpg)
@@ -196,5 +200,7 @@ The final phase was near; build the panel housing and mounting system.
 The housing was cut from some scrap quarter inch plywood I had. The backing panel was the leftover sheet metal. Nothing was quite cut square, so it's a bit janky, but it still works.
 
 ![Full Setup](../images/full-setup.jpg)
+
+![Elite Dangerous Usage](../images/panel-usage.png)
 
 Thanks for reading!
