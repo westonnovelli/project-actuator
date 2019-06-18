@@ -1,0 +1,112 @@
+---
+---
+@import "minima";
+@font-face {
+    font-family: 'aurebesh';
+    src: url('Aurebesh.ttf') format('truetype');
+}
+
+.site-header {
+    border-top-color: #984B43;
+    border-bottom-color: #EAC67A;
+    background-color: #233237;
+
+    .wrapper {
+        background-color: transparent;
+    }
+}
+
+.site-title {
+    font-family: 'aurebesh';
+    
+    &, &:visited {
+        color: #499af1;
+    }
+}
+
+.page-content {
+    padding: 0;
+    background: #18121E;
+    color: white;
+
+    .wrapper {
+        padding-top: 30px;
+        background: #18121E;
+    }
+}
+
+.post-meta {
+    color: #EAC67A;
+}
+
+.post-content h2 {
+    background-color: #233237;
+    padding: 4px 16px;
+    font-size: 1.5em;
+    line-height: 31px;
+    border: medium solid #984B43;
+}
+
+a, a:visited {
+    color: #499af1;
+}
+
+img {
+    border: medium solid #EAC67A;
+    box-shadow: 2px 2px 4px 0 #984b40;
+    box-sizing: border-box;
+}
+
+.highlighter-rouge {
+    div.highlight {
+        background: #18121E;
+
+        pre.highlight {
+            background: #233237;
+            border: medium solid #499af1;
+
+            code {
+                background-color: transparent;
+            }
+    
+            .kt, .k {
+                color: #499af1;
+            }
+    
+            .nf {
+                color: #984B43;
+            }
+    
+            .mi {
+                color: #EAC67A;
+            }        
+        }
+    }
+}
+
+.site-footer {
+    background: #18121E;
+    color: white;
+    border-top-color: #984B43;
+
+    .footer-col-wrapper {
+        color: #EAC67A;
+    }
+
+    .social-media-list {
+        a {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .svg-icon {
+        fill: #499af1;
+    }
+}
+
+// background color: navy: #18121E
+// gunmetal: #233237
+// rusty red: #984B43
+// warm yellow: #EAC67A
+// random blue: #499af1

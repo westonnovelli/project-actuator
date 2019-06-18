@@ -1,2 +1,6 @@
 libraries
 bin
+docs/_site
+docs/Gemfile.lock
+docs/.bundle
+*.gem
