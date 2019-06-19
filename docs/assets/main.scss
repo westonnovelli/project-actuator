@@ -35,6 +35,16 @@
     }
 }
 
+.post-sub-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
 .post-meta {
     color: #EAC67A;
 }
@@ -55,6 +65,24 @@ img {
     border: medium solid #EAC67A;
     box-shadow: 2px 2px 4px 0 #984b40;
     box-sizing: border-box;
+}
+
+.owner {
+    img {
+        border-color: #984b40;
+        border-radius: 50%;
+        box-shadow: none;
+    }
+
+    a.owner-name, a.owner-name:visited {
+        color: #EAC67A;
+    }
+}
+
+code.highlighter-rouge {
+    background-color: #233237;
+    border-color: #984b40;
+    color: #EAC67A;
 }
 
 .highlighter-rouge {

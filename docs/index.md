@@ -142,7 +142,105 @@ I wrote up a skeleton and investigated the silly ideas I had about making the ju
 
 I devised a [three stage system](https://github.com/westonnovelli/project-actuator/blob/master/src/motivator.ino) for making a hyperjump. My hyperdrive partially consisted of two field vector motivators that assisted in powering the drive. In order for the motivators to fire, they needed to be primed before every jump. Further, each motivator was configurable to two vectors. These vectors would have to be alternated for each jump. Think of an hourglass, once it's drained to the bottom. You have to flip it to use it again. Using the 2D toggle switches I would prime each motivator into either the positive or negative vector. Only after both motivators were primed in the opposite direction than it was previously primed (and fired) would the jump drive be triggerable. Then I had a mode switch that would allow me to make either a supercruise (intrasystem travel), hyperspace (intrersystem travel), or a drive disengage shift. All of this complexity to make it more fun and exciting when I needed to jump in a hurry. I can pull the whole "watch this" line from Empire Strikes Back. 
 
-All of this logic would be handled by the Arduino software. The result to the computer would be 1 of 3 different keystrokes depending on the mode switch. The motivator logic and mode detection was taken into consideration when the jump button was pressed. 
+All of this logic would be handled by the Arduino software. The result to the computer would be 1 of 3 different keystrokes depending on the mode switch. The motivator logic and mode detection was taken into consideration when the jump button was pressed.
+
+This function is called when the jump button is pressed. 
+```c
+bool handleJump(char key) {
+  if (key == 'l') {
+    if (allPrimed()) { // we have successfully primed all motivators
+      if (jumpMode == 1) {
+        queueModifiers(_SUPERCRUISE_MOD);
+        queueKeystroke(_SUPERCRUISE);
+      } else if (jumpMode == 2) {
+        queueModifiers(_HYPERSPACE_MOD);
+        queueKeystroke(_HYPERSPACE);
+      } else {
+        queueKeystroke(_JUMP_DISENGAGE);
+      }
+    } else {
+      // Failed jump attempt; reset motivator for next discharge
+      resetAllMotivators();
+    }
+    stabilizeAllMotivators();
+    return true;
+  }
+  return false;
+}
+```
+
+The `allPrimed` function checks to see if every field motivator passes the primed test:
+```c
+/*
+ * A Motivator is only primed successfully if the newly set vector is NOT identical to the previously set vector.
+ */
+bool primed(int index) {
+  return motivators[index][prev] != motivators[index][current];
+}
+```
+
+The Keypad logic is piped through a `handleKeypress` function that switches on the virutal key that was pressed, i.e. `handleKeypress` determines which button was pressed.
+
+```c
+bool handleKeypress(char key) {
+  if (key == 'A' || key == 'C') {
+    return handleMotivator1(key);
+  } else if (key == 'B' || key == 'D') {
+    return handleMotivator2(key);
+  } else if (key == 'l') {
+    return handleJump(key);
+  } else if (key == 'P' || key == 'O') {
+    return handle0Throttle(key);
+  } else if (key == 'M' || key == 'N') {
+    return handle50Throttle(key);
+  } else if (key == 'd' || key == 'c') {
+    return handle75Throttle(key);
+  } else if (key == 'a' || key == 'b') {
+    return handle100Throttle(key);
+  } else if (key == 'k' || key == 'j' || key == 'i') {
+    return handleSafety(key);
+  } else if (key == 'h' || key == 'g' || key == 'e' || key == 'f') {
+    return handleShipPeripherals(key);
+  } else if (key == 'E' || key == 'F' || key == 'G' || key == 'H') {
+    return handleVisualAugmentation(key);
+  } else if (key == 'I' || key == 'J' || key == 'K' || key == 'L') {
+    return handleTravelAssist(key);
+  }
+  return false;
+}
+```
+
+In an attempt to organzie the logic and separate concerns, handler functions were written to abstract button groups.
+Example handler function:
+```c
+
+bool handleTravelAssist(char key) {
+  if (key == 'I') {
+    queueModifiers(_OPEN_GALAXY_MAP_MOD);
+    queueKeystroke(_OPEN_GALAXY_MAP);
+    return true;
+  } else if (key == 'J') {
+    queueModifiers(_OPEN_SYSTEM_MAP_MOD);
+    queueKeystroke(_OPEN_SYSTEM_MAP);
+    return true;
+  } else if (key == 'K') {
+    queueModifiers(_NEXT_SYSTEM_IN_ROUTE_MOD);
+    queueKeystroke(_NEXT_SYSTEM_IN_ROUTE);
+    return true;
+  } else if (key == 'L') {
+    queueKeystroke(_DISMISS_RECALL_SHIP);
+    return true;
+  }
+  return false;
+}
+```
+The return value says whether a key was queued or not.
+
+Lastly, the `config.ino` [file]() was used to separate the actual keybindings from the logic. Using `#define` to create constants, the keybindings can easily be switched without worrying about the logic.
+```c
+#define _SUPERCRUISE_MOD KEY_MOD_LCTRL
+#define _SUPERCRUISE KEY_J
+``` 
 
 ## Purchasing All the Buttons
 Now that I had some fun writing software it was back to button research. My trip to the local store gave me a better idea of what these online products were like and so I dove in... slowly. After a few more weeks of research on buttons and switches, I had picked out all my actuators of choice and placed the order. The buttons were delivered the next day! I quickly wired each type of button into my prototype to confirm it worked in the matrix configuration as I had planned and they did! Yay! So then the next step was to figure out how to mount all of these buttons and switches.
@@ -192,6 +290,24 @@ I color coded the columns vs the rows and numbered each one with the pin it woul
 Most of the buttons on the panel were a part of the matrix. But a few didn't belong. The mode switch for the hyperspace jump mechanic was a rotary switch and thus not a momentary actuator and the full panel ON OFF switch were handled separately. This is where I finally understood what the pull-down resistors are for!
 
 A small secondary circuit was added. I wanted to be able to disconnect the panel from the computer without having to unplug it. Further, only ever needed to read the rotary switch's state when the jump button was pressed. These could easily be wired together, or so I thought. My first pass was resulting in some very confusing results and it turns out, the phantom signal problem could be solved with a pull-down resistor. And so the circuit was reconfigured to look like this: note the resistor!
+
+The panel ON OFF switch logic was inserted into the serial writing function such that before the Arduino writes bytes to the serial port, it checks to see if the panel active switch in ON or OFF.
+
+```c
+  // loop() function
+  ...
+  // update active state based on on/off switch
+  panelActive = digitalRead(signalIn) == HIGH;
+
+  ...
+  // function called to send the keystroke to the computer.
+  void serialWrite(uint8_t buf[8], int len) {
+    if (panelActive) {
+      Serial.write(buf, len);
+    }
+  }
+
+```
 
 ## Final Software Touches
 And then all was mechanically complete! I finalized the rest of the software, referenced my key-binding notes to complete the keystroke configuration, and tested that pressing a button made those keystrokes happen! I used one of those presenter assistant programs that displays what keys were just pressed in the corner of the screen. [Carnac](http://code52.org/carnac/) worked just how I needed to see the modifier keys and everything.
