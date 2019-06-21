@@ -52,7 +52,7 @@ This process was most clearly explained in the comments of this article, so full
 * once you flash the firmware, you will need to plug/power cycle the board. My practice was to disconnect the usb cord from the board and then reconnect it.
 * to get the board into DFU mode, you will need to connect two of the pins. See image below.
 
-![DFU mode pins]()
+![DFU mode pins](http://www.fedevel.com/welldoneblog/wp-content/uploads/2015/04/Arduino-Link-ICSP1-Pins-5-6.png)
 
 If you are often changing your source code and trying to test it as a keyboard, you will be doing this a lot.
 * trigger DFU mode
@@ -142,7 +142,7 @@ I found my way to [this](https://github.com/Anarch157a/Elite-Dangerous-Keypad) g
 ## Over Complicated Hyperspace Jump Design 
 I wrote up some skeleton software for the Arduino and investigated the silly ideas I had about making the jump to light speed system waaay over complicated.
 
-I devised a [three stage system](https://github.com/westonnovelli/project-actuator/blob/master/src/motivator.ino) for making a hyperjump. My hyperdrive consisted of two field vector motivators that assisted in powering the drive. In order for the motivators to fire, they needed to be primed before every jump. Further, each motivator was configurable to two vectors. These vectors would have to be alternated for each jump. Think of an hourglass, once it's drained to the bottom. You have to flip it to use it again. Using the 2D toggle switches, I would prime each motivator into either the positive or negative vector. Only after both motivators were primed in the opposite direction than it was previously primed (and fired) would the jump drive be triggerable. Then I had a mode switch that would allow me to make either a supercruise (intrasystem travel), hyperspace (intrersystem travel), or a drive disengage shift. All of this complexity to make it more fun and exciting when I needed to jump in a hurry. I can pull the whole "[watch this](todo link)" line from Empire Strikes Back. 
+I devised a [three stage system](https://github.com/westonnovelli/project-actuator/blob/master/src/motivator.ino) for making a hyperjump. My hyperdrive consisted of two field vector motivators that assisted in powering the drive. In order for the motivators to fire, they needed to be primed before every jump. Further, each motivator was configurable to two vectors. These vectors would have to be alternated for each jump. Think of an hourglass, once it's drained to the bottom. You have to flip it to use it again. Using the 2D toggle switches, I would prime each motivator into either the positive or negative vector. Only after both motivators were primed in the opposite direction than it was previously primed (and fired) would the jump drive be triggerable. Then I had a mode switch that would allow me to make either a supercruise (intrasystem travel), hyperspace (intrersystem travel), or a drive disengage shift. All of this complexity to make it more fun and exciting when I needed to jump in a hurry. I can pull the whole "[watch this](https://youtu.be/X-rkFaIPyL4)" line from Empire Strikes Back. 
 
 All of this logic would be handled by the Arduino software. The result to the computer would be 1 of 3 different keystrokes depending on the mode switch. The motivator logic and mode detection was taken into consideration when the jump button was pressed.
 
@@ -238,7 +238,7 @@ bool handleTravelAssist(char key) {
 ```
 The return value says whether a key was queued or not.
 
-Lastly, the `config.ino` [file](todo link) was used to separate the actual keybindings from the logic. Using `#define` to create constants, the keybindings can easily be switched without worrying about the logic.
+Lastly, the `config.ino` [link](https://github.com/westonnovelli/project-actuator/blob/master/src/config.ino) was used to separate the actual keybindings from the logic. Using `#define` to create constants, the keybindings can easily be switched without worrying about the logic.
 ```c
 #define _SUPERCRUISE_MOD KEY_MOD_LCTRL
 #define _SUPERCRUISE KEY_J
@@ -293,7 +293,7 @@ Most of the buttons on the panel were a part of the matrix, but a few didn't bel
 
 A small secondary circuit was added. I wanted to be able to disconnect the panel from the computer without having to unplug it. Further, I only ever needed to read the rotary switch's state when the jump button was pressed. These could easily be wired together, or so I thought. My first pass resulted in some very confusing results and it turns out, the phantom signal problem could be solved with a pull-down resistor. And so the circuit was reconfigured to look like this: note the resistor!
 
-![](todo image)
+![Pull-down resistor circuit](https://www.arduino.cc/en/uploads/Tutorial/button_schem.png)
 
 The panel ON OFF switch logic was inserted into the serial writing function such that before the Arduino writes bytes to the serial port, it checks to see if the panel active switch in ON or OFF.
 
@@ -325,7 +325,7 @@ The housing was cut from some scrap quarter inch plywood I had. The backing pane
 
 ![Full Setup](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/full-setup.jpg)
 
-All is said and done, the project took (todo time) months.
+All is said and done, the project took around 5 months of on and off casual work.
 
 ![Elite Dangerous Usage](https://raw.githubusercontent.com/westonnovelli/project-actuator/master/images/panel-usage.png)
 
